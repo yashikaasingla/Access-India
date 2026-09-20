@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AccessIndia — Find accessible places near you</title>
+<meta name="description" content="AccessIndia helps people find public places with verified accessibility facilities: ramps, elevators, accessible washrooms, visual and hearing assistance." />
+
+<!-- Google Fonts (optional). If this fails to load, the CSS falls back to system fonts. -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Noto+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+
+<!-- Keyboard users can jump straight to content -->
+<a class="skip-link" href="#main">Skip to main content</a>
+
+<!-- ============ HEADER / NAVIGATION ============ -->
+<header class="topbar">
+  <div class="topbar-inner">
+
+    <button class="brand" type="button" data-view="home" aria-label="AccessIndia, go to home">
+      <span class="brand-pin" aria-hidden="true">
+        <svg viewBox="0 0 24 24" focusable="false"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7Z"/><circle cx="12" cy="9" r="2.6" fill="#fff"/></svg>
+      </span>
+      <span class="brand-text">Access<span class="brand-text-b">India</span></span>
+    </button>
+
+    <nav class="site-nav" id="site-nav" aria-label="Main">
+      <button type="button" class="nav-btn is-active" data-view="home" aria-current="page">Home</button>
+      <button type="button" class="nav-btn" data-view="map">Accessible Map</button>
+      <button type="button" class="nav-btn" data-view="explore">Explore</button>
+      <button type="button" class="nav-btn" data-view="assistant">AI Assistant</button>
+    </nav>
+
+    <div class="topbar-actions">
+      <button type="button" id="a11y-toggle" class="icon-btn" aria-expanded="false" aria-controls="a11y-panel">
+        <span class="icon-btn-glyph" aria-hidden="true">
+          <svg viewBox="0 0 24 24" focusable="false"><circle cx="12" cy="4" r="2"/><path d="M4 8h16v2h-5l1.5 11h-2.2L13 14h-2l-1.3 7H7.5L9 10H4Z"/></svg>
+        </span>
+        <span class="icon-btn-label">Accessibility</span>
+      </button>
+
+      <button type="button" id="menu-toggle" class="icon-btn menu-toggle" aria-expanded="false" aria-controls="site-nav">
+        <span class="icon-btn-glyph" aria-hidden="true">
+          <svg viewBox="0 0 24 24" focusable="false"><path d="M3 6h18v2.2H3zM3 10.9h18v2.2H3zM3 15.8h18V18H3z"/></svg>
+        </span>
+        <span class="icon-btn-label">Menu</span>
+      </button>
+    </div>
+
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- ==================================================== -->
+  <!-- VIEW 1: HOME                                         -->
+  <!-- ==================================================== -->
+  <section class="view is-active" id="view-home" aria-labelledby="hero-title">
+
+    <div class="hero">
+      <div class="hero-copy">
+        <p class="hero-tag">Community-verified accessibility data</p>
+        <h1 id="hero-title">India, Accessible for Everyone.</h1>
+        <p class="hero-sub">Find places, services and facilities designed to make everyday life more accessible.</p>
+        <div class="hero-actions">
+          <button type="button" class="btn btn-primary" data-view="map">Explore accessible places</button>
+          <button type="button" class="btn btn-ghost" data-view="assistant">Ask the AI assistant</button>
+        </div>
+        <dl class="hero-stats">
+          <div><dt>Places listed</dt><dd id="stat-places">0</dd></div>
+          <div><dt>Fully accessible</dt><dd id="stat-full">0</dd></div>
+          <div><dt>Facility checks</dt><dd id="stat-checks">0</dd></div>
+        </dl>
+      </div>
+
+      <!-- Decorative mini-map preview -->
+      <div class="hero-map" aria-hidden="true">
+        <div class="mini-map">
+          <span class="mini-road mini-road-h" style="top:32%"></span>
+          <span class="mini-road mini-road-h" style="top:68%"></span>
+          <span class="mini-road mini-road-v" style="left:28%"></span>
+          <span class="mini-road mini-road-v" style="left:64%"></span>
+          <span class="mini-pin" style="left:22%;top:24%"></span>
+          <span class="mini-pin mini-pin-alt" style="left:58%;top:44%"></span>
+          <span class="mini-pin" style="left:76%;top:72%"></span>
+          <span class="mini-pin mini-pin-alt" style="left:38%;top:78%"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Categories -->
+    <section class="band" aria-labelledby="cat-title">
+      <div class="band-head">
+        <h2 id="cat-title">Browse by category</h2>
+        <p>Every listing records the same seven facility checks, so you can compare places fairly.</p>
+      </div>
+      <div class="category-grid" id="home-categories"></div>
+    </section>
+
+    <!-- Quick filters -->
+    <section class="band band-tinted" aria-labelledby="qf-title">
+      <div class="band-head">
+        <h2 id="qf-title">Filter for your needs</h2>
+        <p>Pick a need and the map shows only places that meet it, with the facilities that matter to you first.</p>
+      </div>
+      <div class="chip-row" id="home-filters"></div>
+    </section>
+
+    <!-- Nearby places -->
+    <section class="band" aria-labelledby="nearby-title">
+      <div class="band-head">
+        <h2 id="nearby-title">Accessible places near you</h2>
+        <p>Sonipat, Haryana · sample data for this prototype</p>
+      </div>
+      <div class="place-grid" id="home-places"></div>
+      <button type="button" class="btn btn-ghost btn-wide" data-view="explore">See all places</button>
+    </section>
+
+    <!-- AI preview -->
+    <section class="band band-tinted" aria-labelledby="aip-title">
+      <div class="band-head">
+        <h2 id="aip-title">Ask about a place before you travel</h2>
+        <p>The assistant answers from the facility data we hold, so you know before you go.</p>
+      </div>
+      <div class="ai-preview">
+        <div class="ai-bubble ai-bubble-user">Is there an accessible washroom at the metro station?</div>
+        <div class="ai-bubble ai-bubble-bot">Yes. Civic Centre Metro Station has an accessible washroom on the concourse level, plus two lifts and tactile paving to the platform.</div>
+        <div class="ai-preview-actions" id="ai-preview-questions"></div>
+      </div>
+    </section>
+
+    <!-- Emergency -->
+    <section class="band" aria-labelledby="em-title">
+      <div class="band-head">
+        <h2 id="em-title">Emergency and support numbers</h2>
+        <p>Free national helplines. Save them before you need them.</p>
+      </div>
+      <ul class="emergency-list">
+        <li><span class="em-num">112</span><span class="em-label">All-in-one emergency (police, fire, ambulance)</span></li>
+        <li><span class="em-num">108</span><span class="em-label">Ambulance and medical emergency</span></li>
+        <li><span class="em-num">14567</span><span class="em-label">Elder Line — helpline for senior citizens</span></li>
+        <li><span class="em-num">1800-233-5956</span><span class="em-label">National disability helpline (Divyangjan)</span></li>
+        <li><span class="em-num">1098</span><span class="em-label">Childline</span></li>
+      </ul>
+      <p class="fineprint">Numbers shown are public Indian helplines. Always confirm locally in a real emergency.</p>
+    </section>
+
+  </section>
+
+  <!-- ==================================================== -->
+  <!-- VIEW 2: ACCESSIBLE MAP                               -->
+  <!-- ==================================================== -->
+  <section class="view" id="view-map" aria-labelledby="map-title" hidden>
+
+    <div class="view-head">
+      <h1 id="map-title">Accessible map</h1>
+      <p>Search a place, filter by your access needs, then open a pin for the full facility list.</p>
+    </div>
+
+    <!-- Search -->
+    <div class="searchbar" role="search">
+      <label class="sr-only" for="search-input">Search accessible places</label>
+      <span class="search-glyph" aria-hidden="true">
+        <svg viewBox="0 0 24 24" focusable="false"><circle cx="11" cy="11" r="6.4" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M15.8 15.8 21 21" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+      </span>
+      <input type="search" id="search-input" placeholder="Try &quot;hospital&quot; or &quot;metro&quot;" autocomplete="off" />
+      <button type="button" id="voice-btn" class="voice-btn" aria-label="Search by voice">
+        <span aria-hidden="true">
+          <svg viewBox="0 0 24 24" focusable="false"><rect x="9" y="2.5" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M12 17.5V21M8.5 21h7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+        </span>
+      </button>
+      <button type="button" id="search-btn" class="btn btn-primary btn-search">Search</button>
+    </div>
+    <p class="voice-status" id="voice-status" hidden></p>
+
+    <!-- Filters -->
+    <div class="filter-bar">
+      <h2 class="filter-heading" id="filter-heading">Access needs</h2>
+      <div class="chip-row" id="filter-bar" role="group" aria-labelledby="filter-heading"></div>
+      <button type="button" class="link-btn" id="clear-filters">Clear filters</button>
+    </div>
+
+    <div class="map-layout">
+
+      <!-- CSS map -->
+      <div class="map-panel">
+        <div class="map-canvas" id="map-canvas" role="group" aria-label="Map of accessible places. Each pin is a button.">
+          <span class="road road-h" style="top:20%"></span>
+          <span class="road road-h" style="top:52%"></span>
+          <span class="road road-h" style="top:80%"></span>
+          <span class="road road-v" style="left:24%"></span>
+          <span class="road road-v" style="left:52%"></span>
+          <span class="road road-v" style="left:78%"></span>
+          <span class="map-park" style="left:56%;top:58%;width:22%;height:24%"></span>
+          <span class="map-water" style="left:2%;top:84%;width:40%;height:14%"></span>
+          <span class="map-label" style="left:57%;top:59%">Nehru Park</span>
+          <span class="map-label" style="left:3%;top:85%">Canal Road</span>
+          <div id="map-pins"></div>
+        </div>
+        <p class="map-note">Illustrative map for the prototype. Pin positions are sample data, not live GPS.</p>
+      </div>
+
+      <!-- Results -->
+      <div class="results-panel">
+        <h2 class="results-head" id="results-count">Loading places…</h2>
+        <div class="results-list" id="results-list"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================================================== -->
+  <!-- VIEW 3: EXPLORE                                      -->
+  <!-- ==================================================== -->
+  <section class="view" id="view-explore" aria-labelledby="explore-title" hidden>
+    <div class="view-head">
+      <h1 id="explore-title">Explore</h1>
+      <p>All listed places, grouped the way people actually search for them.</p>
+    </div>
+    <div class="chip-row" id="explore-categories" role="group" aria-label="Filter by category"></div>
+    <h2 class="results-head" id="explore-count">All places</h2>
+    <div class="place-grid" id="explore-list"></div>
+  </section>
+
+  <!-- ==================================================== -->
+  <!-- VIEW 4: AI ASSISTANT                                 -->
+  <!-- ==================================================== -->
+  <section class="view" id="view-assistant" aria-labelledby="assistant-title" hidden>
+    <div class="view-head">
+      <h1 id="assistant-title">AI accessibility assistant</h1>
+      <p>Ask about ramps, lifts, washrooms or how to reach a place. Answers come from the facility data in this prototype.</p>
+    </div>
+
+    <div class="chat">
+      <div class="chat-log" id="chat-log" role="log" aria-live="polite" aria-label="Conversation"></div>
+
+      <div class="chat-suggestions" id="chat-suggestions" role="group" aria-label="Suggested questions"></div>
+
+      <div class="chat-input-row">
+        <label class="sr-only" for="chat-input">Type your question</label>
+        <input type="text" id="chat-input" placeholder="Ask a question about accessibility…" autocomplete="off" />
+        <button type="button" id="chat-voice" class="voice-btn" aria-label="Ask by voice">
+          <span aria-hidden="true">
+            <svg viewBox="0 0 24 24" focusable="false"><rect x="9" y="2.5" width="6" height="11" rx="3"/><path d="M5.5 11a6.5 6.5 0 0 0 13 0" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><path d="M12 17.5V21M8.5 21h7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+          </span>
+        </button>
+        <button type="button" id="chat-send" class="btn btn-primary">Send</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p><strong>AccessIndia</strong> — a hackathon prototype built for the theme “Accessible India”.</p>
+  <p class="fineprint">All places and facility data shown here are sample data created for demonstration.</p>
+</footer>
+
+<!-- ============ PLACE DETAIL MODAL ============ -->
+<div class="overlay" id="overlay" hidden></div>
+
+<div class="modal" id="place-dialog" role="dialog" aria-modal="true" aria-labelledby="dialog-title" hidden>
+  <div class="modal-head">
+    <h2 id="dialog-title">Place details</h2>
+    <button type="button" id="dialog-close" class="icon-close" aria-label="Close details">
+      <span aria-hidden="true">
+        <svg viewBox="0 0 24 24" focusable="false"><path d="M5 5 19 19M19 5 5 19" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+      </span>
+    </button>
+  </div>
+  <div class="modal-body" id="dialog-body"></div>
+  <div class="modal-foot">
+    <button type="button" id="read-aloud-btn" class="btn btn-primary">Read this aloud</button>
+    <button type="button" id="stop-aloud-btn" class="btn btn-ghost">Stop reading</button>
+  </div>
+</div>
+
+<!-- ============ ACCESSIBILITY SETTINGS PANEL ============ -->
+<div class="a11y-panel" id="a11y-panel" role="dialog" aria-modal="false" aria-labelledby="a11y-title" hidden>
+  <div class="modal-head">
+    <h2 id="a11y-title">Accessibility settings</h2>
+    <button type="button" id="a11y-close" class="icon-close" aria-label="Close accessibility settings">
+      <span aria-hidden="true">
+        <svg viewBox="0 0 24 24" focusable="false"><path d="M5 5 19 19M19 5 5 19" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+      </span>
+    </button>
+  </div>
+
+  <div class="a11y-body">
+
+    <div class="setting">
+      <h3 id="font-label">Text size</h3>
+      <div class="font-controls" role="group" aria-labelledby="font-label">
+        <button type="button" id="font-dec" class="step-btn" aria-label="Decrease text size">A−</button>
+        <output id="font-level" for="font-dec font-inc">100%</output>
+        <button type="button" id="font-inc" class="step-btn" aria-label="Increase text size">A+</button>
+      </div>
+    </div>
+
+    <div class="setting">
+      <div class="switch-row">
+        <label for="toggle-contrast">High contrast mode</label>
+        <input type="checkbox" id="toggle-contrast" class="switch" />
+      </div>
+      <p class="setting-note">Black background, yellow highlights, thicker outlines.</p>
+    </div>
+
+    <div class="setting">
+      <div class="switch-row">
+        <label for="toggle-motion">Reduce motion</label>
+        <input type="checkbox" id="toggle-motion" class="switch" />
+      </div>
+      <p class="setting-note">Turns off transitions and the pulsing map pins.</p>
+    </div>
+
+    <div class="setting">
+      <div class="switch-row">
+        <label for="toggle-links">Underline all links and buttons</label>
+        <input type="checkbox" id="toggle-links" class="switch" />
+      </div>
+      <p class="setting-note">Helps when colour alone is hard to distinguish.</p>
+    </div>
+
+    <div class="setting">
+      <div class="switch-row">
+        <label for="toggle-spacing">Extra letter and line spacing</label>
+        <input type="checkbox" id="toggle-spacing" class="switch" />
+      </div>
+      <p class="setting-note">Easier reading for dyslexia and low vision.</p>
+    </div>
+
+    <button type="button" id="reset-settings" class="btn btn-ghost btn-wide">Reset to defaults</button>
+    <p class="setting-note">Your choices stay on this device for this session.</p>
+  </div>
+</div>
+
+<!-- Screen reader announcements -->
+<p class="sr-only" id="live-region" aria-live="polite" role="status"></p>
+<div class="toast" id="toast" hidden></div>
+
+<script src="script.js"></script>
+</body>
+</html>
